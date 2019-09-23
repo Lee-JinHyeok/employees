@@ -7,7 +7,9 @@
 <title>employeesList</title>
 </head>
 <body>
+
 	<h1>사원 목록</h1>
+	<h2><a href="${pageContext.request.contextPath}/index">홈으로</a></h2>
 	<form method="get" action="${pageContext.request.contextPath}/employees/getEmployeesList">
 		<select name="limit">
 			<option value="10">10</option>
@@ -16,6 +18,7 @@
 			<option value="40">40</option>
 			<option value="50">50</option>
 		</select>
+		<button type="submit">선택</button>
 	</form>
 	<table>
 		<thead>
@@ -36,13 +39,10 @@
 					<td>${employees.firstName }</td>
 					<td>${employees.lastName }</td>
 					<td>${employees.gender }</td>
-					<td>${employees.hirdDate }</td>
+					<td>${employees.hireDate }</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-
-
-
 </body>
 </html>

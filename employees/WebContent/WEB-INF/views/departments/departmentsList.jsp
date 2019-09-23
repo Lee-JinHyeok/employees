@@ -8,6 +8,7 @@
 </head>
 <body>
 	<h1>부서 목록</h1>
+	<h2><a href="${pageContext.request.contextPath}/index">홈으로</a></h2>
 	<%
 		//List<Departments> list = (List<Departments>)request.getAttribute("list");
 		// ${list} 위 줄이랑 같음

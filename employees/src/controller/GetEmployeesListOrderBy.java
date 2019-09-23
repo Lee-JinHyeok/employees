@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,20 +13,20 @@ import javax.servlet.http.HttpServletResponse;
 import model.EmployeesDao;
 import vo.Employees;
 
-@WebServlet("/employees/getEmployeesList")
-public class GetEmployeesListServlet extends HttpServlet {
+@WebServlet("/employees/getEmployeesListOrderBy")
+public class GetEmployeesListOrderBy extends HttpServlet {
 	private EmployeesDao employeesDao;
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		employeesDao = new EmployeesDao();
-		int limit = 10;
-		if(request.getParameter("limit") != null) {
-			limit = Integer.parseInt(request.getParameter("limit"));
-		}
+		System.out.println("GetEmployeesListOrderBy param order : " + request.getParameter("order"));
 		
-		List<Employees> list = employeesDao.selectEmployeesListByLimit(limit);
+		List<Employees> list = new ArrayList<Employees>();
+		employeesDao = new EmployeesDao();
+		list = employeesDao.selcetEmployeesListOrderBy(request.getParameter("order"));
 		
 		request.setAttribute("list", list);
 		
 		request.getRequestDispatcher("/WEB-INF/views/employees/employeesList.jsp").forward(request, response);
+		
 	}
 }
