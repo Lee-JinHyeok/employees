@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import db.DBHelper;
+
 public class DeptEmpDao {
 	public int selectDeptEmpRowCount() {
 		int count = 0 ;
@@ -14,8 +16,7 @@ public class DeptEmpDao {
 		final String sql = "SELECT COUNT(*) FROM titles";
 		
 		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/employees","root","java1234");
+			conn = DBHelper.getConneciton();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			
@@ -25,13 +26,7 @@ public class DeptEmpDao {
 		}	catch(Exception e) {
 			
 		}	finally	{
-			try {
-				rs.close();
-				stmt.close();
-				conn.close();
-			}	catch(Exception e) {
-				e.printStackTrace();
-			}
+			DBHelper.close(rs, stmt, conn);
 		}
 		return count;
 	}
