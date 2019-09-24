@@ -13,20 +13,20 @@ import javax.servlet.http.HttpServletResponse;
 import model.EmployeesDao;
 import vo.Employees;
 
-@WebServlet("/employees/getEmployeesListOrderBy")
-public class GetEmployeesListOrderBy extends HttpServlet {
+@WebServlet("/employees/getEmployeesListBetween")
+public class GetEmployeesListBetweenServlet extends HttpServlet {
 	private EmployeesDao employeesDao;
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("GetEmployeesListOrderBy param order : " + request.getParameter("order"));
-		
-		List<Employees> list = new ArrayList<Employees>();
 		employeesDao = new EmployeesDao();
-		list = employeesDao.selcetEmployeesListOrderBy(request.getParameter("order"));
+		int begin = Integer.parseInt(request.getParameter("begin"));
+		int end = Integer.parseInt(request.getParameter("end"));
+		System.out.println(begin + end);
+		List<Employees> list = new ArrayList<Employees>();
+		
+		list = employeesDao.selectEmployeesListBetween(begin, end);
 		
 		request.setAttribute("list", list);
-		
-		request.getRequestDispatcher("/WEB-INF/views/employees/employeesList.jsp").forward(request, response);
-		
+		request.getRequestDispatcher("/WEB-INF/views/employees/employeesListBetween.jsp").forward(request, response);
 	}
+
 }

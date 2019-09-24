@@ -59,8 +59,26 @@
 			</li>
 			<li>
 				<a href="${pageContext.request.contextPath}/salaries/getSalariesStatistics">연봉 통계값 (count, sum, avg, max, min, std)</a>
-			</li>			
+			</li>
+			<li>
+				<a href="${pageContext.request.contextPath}/employees/getEmployeesCountByGender">사원 수 (성별 group by gender)</a>
+			</li>
+			<li><!--
+					/departments/getDepartmentsCountByDeptNo
+					GetDepartmentsCountByDeptNoServlet.class
+					DepartmentsDao.selectDepartmentsCountByDeptNo()
+					/WEB-INF/views/departments/departmentsCountByDeptNo.jsp
+				 -->
+				<a href="${pageContext.request.contextPath}/departments/getDepartmentsCountByDeptNo">현재 부서별 사원 수</a>
+			</li>						
 		</ul>
+	</div>
+	<div>
+		<form method="get" action ="${pageContext.request.contextPath}/employees/getEmployeesListBetween">
+			<input type="number" name="begin"> ~ <input type="number" name="end">
+			<button type="submit">사원 목록</button>
+			(${min }~${max })
+		</form>	
 	</div>
 </body>
 </html>

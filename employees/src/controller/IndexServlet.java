@@ -31,6 +31,11 @@ public class IndexServlet extends HttpServlet {
 		//rd.forward(request, response);//request와 response를 위임해준다.
 		//아래처럼 쉽게 바꿀 수 있다.
 		request.setAttribute("employeesRowCount", employeesRowCount);
+		int maxEmpNo = employeesDao.selectEmpNo("max");
+		int minEmpNo = employeesDao.selectEmpNo("min");
+		
+		request.setAttribute("max", maxEmpNo);
+		request.setAttribute("min", minEmpNo);
 		
 		deptEmpDao = new DeptEmpDao();
 		int deptEmpRowCount = deptEmpDao.selectDeptEmpRowCount();
