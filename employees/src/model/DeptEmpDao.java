@@ -16,7 +16,7 @@ public class DeptEmpDao {
 		final String sql = "SELECT COUNT(*) FROM titles";
 		
 		try {
-			conn = DBHelper.getConneciton();
+			conn = DBHelper.getConnection();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			

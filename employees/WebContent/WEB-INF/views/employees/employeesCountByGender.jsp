@@ -8,6 +8,7 @@
 </head>
 <body>
 <table>
+	<h2><a href="${pageContext.request.contextPath}/index">홈으로</a>
 	<thead>
 		<tr>
 			<th>gender</th>

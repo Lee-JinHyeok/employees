@@ -3,7 +3,7 @@ package db;
 import java.sql.*;
 
 public class DBHelper {
-	public static Connection getConneciton() throws Exception{
+	public static Connection getConnection() throws Exception{
 			
 		Class.forName("org.mariadb.jdbc.Driver");
 		Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/employees","root","java1234");

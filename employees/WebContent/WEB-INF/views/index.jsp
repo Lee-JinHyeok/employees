@@ -70,6 +70,9 @@
 					/WEB-INF/views/departments/departmentsCountByDeptNo.jsp
 				 -->
 				<a href="${pageContext.request.contextPath}/departments/getDepartmentsCountByDeptNo">현재 부서별 사원 수</a>
+			</li>
+			<li>
+				<a href="${pageContext.request.contextPath}/employees/getEmployeesListByPage">사원목록 페이징(10명씩)</a>
 			</li>						
 		</ul>
 	</div>

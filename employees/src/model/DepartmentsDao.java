@@ -24,7 +24,7 @@ public class DepartmentsDao {
 		+ "ON de.dept_no = d.dept_no WHERE de.to_date = '9999-01-01' GROUP BY de.dept_no ORDER BY COUNT(d.dept_no) desc";
 		
 		try {
-			conn = DBHelper.getConneciton();
+			conn = DBHelper.getConnection();
 			stmt =conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			while(rs.next()) {
@@ -49,7 +49,7 @@ public class DepartmentsDao {
 		final String sql = "SELECT dept_no, dept_name FROM departments";
 		
 		try {
-			conn = DBHelper.getConneciton();
+			conn = DBHelper.getConnection();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			while(rs.next()) {
@@ -73,7 +73,7 @@ public class DepartmentsDao {
 		final String sql = "SELECT COUNT(*) FROM departments";		
 		
 		try {
-			conn = DBHelper.getConneciton();
+			conn = DBHelper.getConnection();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			if(rs.next()) {

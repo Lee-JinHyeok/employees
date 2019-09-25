@@ -17,7 +17,7 @@ public class SalariesDao {
 		ResultSet rs = null;
 		final String sql = "SELECT COUNT(salary), SUM(salary), AVG(salary), MAX(salary), MIN(salary),STD(salary) FROM salaries";
 		try {
-			conn = DBHelper.getConneciton();
+			conn = DBHelper.getConnection();
 			stmt =conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			if(rs.next()) {
@@ -43,7 +43,7 @@ public class SalariesDao {
 		final String sql = "SELECT COUNT(*) FROM salaries";
 		
 		try {
-			conn = DBHelper.getConneciton();
+			conn = DBHelper.getConnection();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			

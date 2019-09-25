@@ -18,7 +18,7 @@ public class TitlesDao {
 		final String sql = "SELECT DISTINCT title FROM titles";
 		
 		try {
-			conn = DBHelper.getConneciton();
+			conn = DBHelper.getConnection();
 			stmt =conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			
@@ -40,7 +40,7 @@ public class TitlesDao {
 		final String sql = "SELECT COUNT(*) FROM titles";		
 		
 		try {
-			conn = DBHelper.getConneciton();
+			conn = DBHelper.getConnection();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			if(rs.next()) {

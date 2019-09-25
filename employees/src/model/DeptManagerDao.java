@@ -16,7 +16,7 @@ public class DeptManagerDao {
 		final String sql = "SELECT COUNT(*) FROM dept_manager";
 		
 		try {
-			conn = DBHelper.getConneciton();
+			conn = DBHelper.getConnection();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			

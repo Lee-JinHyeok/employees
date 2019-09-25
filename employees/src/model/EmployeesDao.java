@@ -13,7 +13,51 @@ import db.DBHelper;
 import vo.Employees;
 
 public class EmployeesDao {
-
+	public int selectLastPage(int rowPerPage) {
+	int totalCount = this.selectEmployeesCount();
+	System.out.println("seelectLastPage : total Count : "+totalCount);
+	System.out.println("seelectLastPage : rowPerPage: "+rowPerPage);
+	int lastPage = totalCount / rowPerPage;
+	if((lastPage % rowPerPage) != 0) {
+		lastPage++;
+	}
+	return lastPage;
+	}
+	//페이징 작업 몇페이지에 몇개 씩 보여줄건지 하는 
+	public  List<Employees> selectEmployeesListByPage(int currentPage, int rowPerPage){
+		List<Employees> list = new ArrayList<Employees>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = 
+	"SELECT emp_no, birth_date, first_name, last_name, gender, hire_date FROM employees limit ?, ?";
+		try {
+			conn = DBHelper.getConnection();
+			stmt = conn.prepareStatement(sql);
+			int startRow = (currentPage - 1) * rowPerPage;	//rowPerPage, currentPage -> startRow : (currentPage - 1) * rowPerPage;
+			stmt.setInt(1, startRow);
+			stmt.setInt(2, rowPerPage);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				Employees employees = new Employees();
+				employees.setEmpNo(rs.getInt("emp_no"));
+				employees.setBirthDate(rs.getString("birth_date"));
+				employees.setFirstName(rs.getString("first_name"));
+				employees.setLastName(rs.getString("last_name"));
+				employees.setGender(rs.getString("gender"));
+				employees.setHireDate(rs.getString("hire_date"));
+				list.add(employees);
+			}
+		}	catch(Exception e) {
+		}	finally {
+			DBHelper.close(rs, stmt, conn);
+		}
+		return list;
+		
+		
+	}
+	
+	
 	public List<Map<String, Object>> selectEmployeesCountGroupByGender(){
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		Connection conn = null;
@@ -21,7 +65,7 @@ public class EmployeesDao {
 		ResultSet rs = null;
 		String sql = "SELECT gender, COUNT(gender) FROM employees GROUP BY gender";
 		try {
-			conn = DBHelper.getConneciton();
+			conn = DBHelper.getConnection();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			while(rs.next()) {
@@ -43,10 +87,10 @@ public class EmployeesDao {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		final String sql =
-				"SELECT emp_no, birth_date, first_name, last_name, gender, hire_date FROM employees WHERE emp_no BETWEEN ? AND ? ORDER BY emp_no asc";
+				"SELECT emp_no, birth_date, first_name, last_name, gender, hire_date FROM employees WHERE emp_no BETWEEN ? AND ? ORDER BY emp_no as";
 		
 		try {
-			conn = DBHelper.getConneciton();
+			conn = DBHelper.getConnection();
 			stmt =conn.prepareStatement(sql);
 			stmt.setInt(1, begin);
 			stmt.setInt(2, end);
@@ -82,7 +126,7 @@ public class EmployeesDao {
 		}
 		
 		try {
-			conn = DBHelper.getConneciton();
+			conn = DBHelper.getConnection();
 			stmt =conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			if(rs.next()) {
@@ -108,7 +152,7 @@ public class EmployeesDao {
 		ResultSet rs = null;
 		
 		try {
-			conn = DBHelper.getConneciton();
+			conn = DBHelper.getConnection();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			while(rs.next()) {
@@ -138,7 +182,7 @@ public class EmployeesDao {
 		
 		//try꼭해야함 db쪽에서 우리가 원하지 않는 에러발생할수있으니
 		try {
-			conn = DBHelper.getConneciton();
+			conn = DBHelper.getConnection();
 			stmt =conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			if(rs.next()) {
@@ -160,7 +204,7 @@ public class EmployeesDao {
 		final String sql ="SELECT emp_no, birth_date, first_name, last_name, gender, hire_date FROM employees limit ?";
 		
 		try {
-			conn = DBHelper.getConneciton();
+			conn = DBHelper.getConnection();
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, limit);
 			rs = stmt.executeQuery();
@@ -180,6 +224,4 @@ public class EmployeesDao {
 		}
 		return list;
 	}
-	
-
 }
