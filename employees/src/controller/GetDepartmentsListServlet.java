@@ -9,20 +9,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.DepartmentsDao;
+import model.DepartmentsDAO;
 import vo.Departments;
 
-
-@WebServlet("/department/getDepartmentsList")
+@WebServlet("/departments/getDepartmentsList")
+//extends 상속
 public class GetDepartmentsListServlet extends HttpServlet {
-	private DepartmentsDao departmentsDao;
+	private DepartmentsDAO departmentsDAO;
+	//protected는  자기 패키지와 상속된 클래스에서만 치근덕댈수잇다.
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		departmentsDao = new DepartmentsDao();
-		List<Departments> list = departmentsDao.selectDepartmentsList();
-		
+		//this 자기자신 
+		this.departmentsDAO = new DepartmentsDAO();
+		List<Departments> list = departmentsDAO.selectDepartmentsList();
+		//Attribute 톰캣에 머가잇는데 거기다 저장함 
 		request.setAttribute("list", list);
-		
-		request.getRequestDispatcher("/WEB-INF/views/departments/departmentsList.jsp").forward(request, response);
+		//forward 포워딩을함 여기서 포워딩이란 절루 가라 ~ 연결시켜줌
+		request.getRequestDispatcher("/WEB-INF/views/departments/getDepartmentsList.jsp").forward(request, response);
 		
 	}
+
 }

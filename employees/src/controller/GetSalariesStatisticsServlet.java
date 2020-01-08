@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.SalariesDao;
+import model.SalariesDAO;
 
 
 @WebServlet("/salaries/getSalariesStatistics")
 public class GetSalariesStatisticsServlet extends HttpServlet {
-	private SalariesDao salariesDao;
+	SalariesDAO salariesDAO;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		salariesDao = new SalariesDao();
-		Map<String, Long> map = new HashMap<String, Long>();
-		
-		map = salariesDao.selectSalariesStatistics();
+		salariesDAO = new SalariesDAO();
+
+		Map<String, Long> map =(Map<String, Long>)salariesDAO.selectSalariesStatistics();
 		request.setAttribute("map", map);
 		
 		request.getRequestDispatcher("/WEB-INF/views/salaries/salariesStatistics.jsp").forward(request, response);
-		
 	}
+
+
 }

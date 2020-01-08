@@ -7,7 +7,6 @@ public class Employees {
 	private String lastName;
 	private String gender;
 	private String hireDate;
-	
 	public int getEmpNo() {
 		return empNo;
 	}
@@ -44,5 +43,6 @@ public class Employees {
 	public void setHireDate(String hireDate) {
 		this.hireDate = hireDate;
 	}
+	
 	
 }

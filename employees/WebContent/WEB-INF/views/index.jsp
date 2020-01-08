@@ -1,87 +1,85 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>index.jsp</title>
+<title>Insert title here</title>
+<link href="${pageContext.request.contextPath}/css/sb-admin-2.css" type="text/css" rel="stylesheet">
+
 </head>
 <body>
-	<h1>index</h1>
-	<h2><a href="${pageContext.request.contextPath}/index">홈으로</a></h2>
-	<!-- WEP APP 네비게이션 -->
-	<h2>데이터베이스 테이블</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>테이블 명</th>
-				<th>전체 행</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>departments</td>
-				<td>${departmentsRowCount }</td>
-			</tr>
-			<tr>
-				<td>dept_emp</td>
-				<td>${deptEmpRowCount}</td>
-			</tr>
-			<tr>
-				<td>dept_manager</td>
-				<td>${deptManagerRowCount }</td>
-			</tr>
-			<tr>
-				<td>employees</td>
-				<td>${employeesRowCount}</td>
-			</tr>
-			<tr>
-				<td>salaries</td>
-				<td>${salariesRowCount }</td>
-			</tr>
-			<tr>
-				<td>titles</td>
-				<td>${titlesRowCount }</td>
-			</tr>
-		</tbody>
-	</table>
-	
+	<div class="card border-left-primary shadow h-100 py-2">
+		<div class="card-body">
+			<div class="row no-gutters align-items-center">
+				<div class="col mr-2">
+					<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings
+						(Monthly)</div>
+					<div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+				</div>
+				<div class="col-auto">
+					<i class="fas fa-calendar fa-2x text-gray-300"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div>
+		<table border = "1">
+			<thead>
+				<tr>
+					<th>테이블 이름</th>
+					<th>전체 행의 수</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>departments</td>
+					<td>${departmentsRowCount}</td>
+				</tr>
+				<tr>
+					<td>employees</td>
+					<td>${employeesRowCount}</td>
+				</tr>
+				<tr>
+					<td>dept_manager</td>
+					<td>${deptManagerRowCount}</td>
+				</tr>
+				<tr>
+					<td>dept_emp</td>
+					<td>${deptEmpRowCount }</td>
+				</tr>
+				<tr>
+					<td>salaries</td>
+					<td>${salariesRowCount }</td>
+				</tr>
+				<tr>
+					<td>titles</td>
+					<td>${titlesRowCount }</td>
+				</tr>
+			</tbody>
+					
+		</table>
+	</div>
 	<div>
 		<ul>
-			<li><a href="${pageContext.request.contextPath}/department/getDepartmentsList">부서 목록</a></li>
-			<li><a href="${pageContext.request.contextPath }/employees/getEmployeesList?limit=10">사원 목록</a></li>
-			<li>
-				사원 목록 first_name
-				<a href="${pageContext.request.contextPath }/employees/getEmployeesListOrderBy?order=asc">오름차순(limit 50)</a>
-				<a href="${pageContext.request.contextPath }/employees/getEmployeesListOrderBy?order=desc">내림차순(limit 50)</a>
+			<li><a href = "${pageContext.request.contextPath}/departments/getDepartmentsList">부서목록</a></li>
+			<li><a href = "${pageContext.request.contextPath}/employees/getEmployeesList">사원목록</a></li>
+			<li><a href = "${pageContext.request.contextPath}/employees/getEmployeesListByPage">사원목록페이징</a></li>
+			<li>사원 목록 정렬
+				<a href = "${pageContext.request.contextPath}/employees/getEmployeesListOrderby?order=asc">오름차순</a>
+				<a href = "${pageContext.request.contextPath}/employees/getEmployeesListOrderby?order=desc">내림차순</a>
 			</li>
-			<li>
-				<a href="${pageContext.request.contextPath}/titles/getTitlesListDistinct">업무 목록 (중복제거 distinct)</a>
-			</li>
-			<li>
-				<a href="${pageContext.request.contextPath}/salaries/getSalariesStatistics">연봉 통계값 (count, sum, avg, max, min, std)</a>
-			</li>
-			<li>
-				<a href="${pageContext.request.contextPath}/employees/getEmployeesCountByGender">사원 수 (성별 group by gender)</a>
-			</li>
-			<li><!--
-					/departments/getDepartmentsCountByDeptNo
-					GetDepartmentsCountByDeptNoServlet.class
-					DepartmentsDao.selectDepartmentsCountByDeptNo()
-					/WEB-INF/views/departments/departmentsCountByDeptNo.jsp
-				 -->
-				<a href="${pageContext.request.contextPath}/departments/getDepartmentsCountByDeptNo">현재 부서별 사원 수</a>
-			</li>
-			<li>
-				<a href="${pageContext.request.contextPath}/employees/getEmployeesListByPage">사원목록 페이징(10명씩)</a>
-			</li>						
+			<li><a href = "${pageContext.request.contextPath}/titles/getTitlesListDistinct">전제 보직 목록</a></li>
+			<li><a href = "${pageContext.request.contextPath}/salaries/getSalariesStatistics">연봉 통계</a></li>
+			<li><a href = "${pageContext.request.contextPath}/employees/getEmployeesCountByGender">성별별 사원수</a></li>
+			<li><a href = "${pageContext.request.contextPath}/departments/getDepartmentsCountByDeptNo">부서별 사원수</a></li>
 		</ul>
 	</div>
-	<div>
-		<form method="get" action ="${pageContext.request.contextPath}/employees/getEmployeesListBetween">
-			<input type="number" name="begin"> ~ <input type="number" name="end">
-			<button type="submit">사원 목록</button>
-			(${min }~${max })
-		</form>	
-	</div>
+	사원검색
+	<form method = "get" action = "${pageContext.request.contextPath}/employees/getEmployeesListBetween">
+		<input type = "text" name = "begin">~<input type = "text" name = "end">
+		<button type = "submit">검색</button>
+	
+	</form>
 </body>
 </html>

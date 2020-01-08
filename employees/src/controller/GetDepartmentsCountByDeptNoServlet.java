@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,19 +10,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.DepartmentsDao;
-
+import model.DepartmentsDAO;
+import vo.Departments;
 
 @WebServlet("/departments/getDepartmentsCountByDeptNo")
+//extends 상속
 public class GetDepartmentsCountByDeptNoServlet extends HttpServlet {
-	private DepartmentsDao departmentsDao;
+	private DepartmentsDAO departmentsDAO;
+	//protected는  자기 패키지와 상속된 클래스에서만 치근덕댈수잇다.
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		departmentsDao = new DepartmentsDao();
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-		list = departmentsDao.selectDepartmentsCountByDeptNo();
-		
+		//this 자기자신 
+		this.departmentsDAO = new DepartmentsDAO();
+		List<Map<String, Object>> list = (List<Map<String, Object>>)departmentsDAO.selectDepartmentsCountByDeptNo();
+		//Attribute 톰캣에 머가잇는데 거기다 저장함 
 		request.setAttribute("list", list);
-		request.getRequestDispatcher("/WEB-INF/views/departments/departmentsCountByDeptNo.jsp").forward(request, response);
+		//forward 포워딩을함 여기서 포워딩이란 절루 가라 ~ 연결시켜줌
+		request.getRequestDispatcher("/WEB-INF/views/departments/getDepartmentsCountByDeptNo.jsp").forward(request, response);
+		
+	}
 
-	}	
 }

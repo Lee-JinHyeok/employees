@@ -9,23 +9,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.EmployeesDao;
+import model.DepartmentsDAO;
+import model.EmployeesDAO;
+import vo.Departments;
 import vo.Employees;
 
+/**
+ * Servlet implementation class GetDepartmentsListServlet
+ */
 @WebServlet("/employees/getEmployeesList")
 public class GetEmployeesListServlet extends HttpServlet {
-	private EmployeesDao employeesDao;
+	private EmployeesDAO employeesDAO;
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		employeesDao = new EmployeesDao();
+		this.employeesDAO = new EmployeesDAO();
 		int limit = 10;
-		if(request.getParameter("limit") != null) {
+		if(request.getParameter("limit") != null){
 			limit = Integer.parseInt(request.getParameter("limit"));
 		}
 		
-		List<Employees> list = employeesDao.selectEmployeesListByLimit(limit);
-		
+		List<Employees> list = (List<Employees>)employeesDAO.selectEmplyeesList(limit);
 		request.setAttribute("list", list);
-		
 		request.getRequestDispatcher("/WEB-INF/views/employees/employeesList.jsp").forward(request, response);
+		
 	}
+
 }

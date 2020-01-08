@@ -9,33 +9,46 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.EmployeesDao;
+import model.EmployeesDAO;
 import vo.Employees;
 
-
+/**
+ * Servlet implementation class GetEmployeesByPage
+ */
 @WebServlet("/employees/getEmployeesListByPage")
 public class GetEmployeesListByPage extends HttpServlet {
-		private EmployeesDao employeesDao;
+	private EmployeesDAO employeesDAO;
+	private int rowPerPage = 10;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		employeesDao = new EmployeesDao();
-		int rowPerPage = 10;
+
 		int currentPage = 1;
-		if(request.getParameter("rowPerPage")!=null) {
-			rowPerPage = Integer.parseInt(request.getParameter("rowPerPage"));
-		}
+		int pageList = 0;
+		employeesDAO = new EmployeesDAO();
+		int lastPage = employeesDAO.selectLastPage(rowPerPage);
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			pageList = (currentPage-1)/10;
 		}
-		System.out.println("cuurentPage  : " + currentPage);	//currentPage 확인
-		int lastPage = employeesDao.selectLastPage(rowPerPage);
-		System.out.println("lastPage : " + lastPage);	
+		if(currentPage<1) {
+			currentPage=1;
+		}
+		if(currentPage>lastPage) {
+			currentPage=lastPage;
+		}
 		
-		List<Employees> list = employeesDao.selectEmployeesListByPage(currentPage, rowPerPage);
-		request.setAttribute("rowPerPage", rowPerPage);				//rowPerPage
-		request.setAttribute("list", list);							//list
-		request.setAttribute("currentPage", currentPage);			//currentPage
-		request.setAttribute("lastPage", lastPage);					//lastPage
-		
+		List<Employees> list = employeesDAO.selectEmplyeesListByPage(rowPerPage, currentPage);
+		request.setAttribute("list", list);
+		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("lastPage", lastPage);
+		request.setAttribute("pageList", pageList);
+
 		request.getRequestDispatcher("/WEB-INF/views/employees/employeesListByPage.jsp").forward(request, response);
+	}
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("rowPerPage") != null){
+			rowPerPage = Integer.parseInt(request.getParameter("rowPerPage"));
+		}
+		doGet(request, response);
 	}
 }
