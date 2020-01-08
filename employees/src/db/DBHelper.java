@@ -5,8 +5,10 @@ import java.sql.*;
 public class DBHelper {
 	public static Connection getConnection() throws Exception {
 		Class.forName("org.mariadb.jdbc.Driver");
+		// hosting용 db
+		//Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/j5539538","j5539538","J12");
+		// test용 db
 		Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/employees", "root", "java1234");
-		
 		return conn;
 	}
 	

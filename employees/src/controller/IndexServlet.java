@@ -17,7 +17,7 @@ import model.TitlesDAO;
 /**
  * Servlet implementation class IndexServlet
  */
-@WebServlet({"/","/index"})
+@WebServlet({"/","/employeesIndex"})
 public class IndexServlet extends HttpServlet {
 	private EmployeesDAO employeesDAO;
 	private DepartmentsDAO departmentsDAO;
@@ -26,7 +26,6 @@ public class IndexServlet extends HttpServlet {
 	private SalariesDAO salariesDAO;
 	private TitlesDAO titlesDAO;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		this.employeesDAO = new EmployeesDAO();
 		int employeesRowCount = employeesDAO.selectEmployeesRowCount();
 		this.departmentsDAO = new DepartmentsDAO();
@@ -46,7 +45,7 @@ public class IndexServlet extends HttpServlet {
 		request.setAttribute("deptManagerRowCount", deptManagerRowCount);
 		request.setAttribute("salariesRowCount", salariesRowCount);
 		request.setAttribute("titlesRowCount", titlesRowCount);
-		request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/employeesIndex.jsp").forward(request, response);
 	}
 
 }

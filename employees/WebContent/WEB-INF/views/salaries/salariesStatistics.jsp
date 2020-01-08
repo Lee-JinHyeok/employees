@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>salary 통계 ㄱㅄ</h1>
+	<h1>salary 통계</h1>
 	<table border = "1">
 		<tr>
 			<td>count</td>
